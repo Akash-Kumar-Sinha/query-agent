@@ -1,5 +1,20 @@
+export enum Tools {
+  DB_COMMAND_CHECK = "db_command_check",
+  ANALYTICAL_VALIDATION = "analytical_validation",
+  PROMPT_EXPANSION = "prompt_expansion",
+  CONVERSATION = "conversation",
+  QUERY_GENERATION = "generate_query",
+}
+
+
 export type JSONSchemaType =
-  "string" | "number" | "integer" | "boolean" | "object" | "array" | "null";
+  | "string"
+  | "number"
+  | "integer"
+  | "boolean"
+  | "object"
+  | "array"
+  | "null";
 
 export interface ToolDefinition<
   TArgs = Record<string, unknown>,
@@ -60,3 +75,4 @@ export interface LLMToolDeclaration {
   type: "function";
   function: LLMFunctionDeclaration;
 }
+
