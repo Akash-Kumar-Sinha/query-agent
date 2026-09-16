@@ -8,12 +8,33 @@ export const Prompt = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
+    if (!value.trim() || isLoading) return;
+
+    const currentPrompt = value;
     setIsLoading(true);
-    setTimeout(() => {
-      console.log("Submitted value:", value);
-    }, 3000);
-    setIsLoading(false);
-    setValue("");
+
+    try {
+      const response = await fetch("/api/query", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt: currentPrompt }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to submit prompt");
+      }
+
+      console.log("API Response:", data);
+      setValue("");
+    } catch (error) {
+      console.error("Error sending prompt to API:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
