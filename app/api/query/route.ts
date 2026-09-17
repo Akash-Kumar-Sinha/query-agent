@@ -28,8 +28,6 @@ const validateAndStream = async function* (prompt: string) {
     input: prompt,
   });
 
-  console.log("[Validation] DB Safety Check Result:", dbResult);
-
   if (!dbResult.success) {
     yield streamManager.createEvent(
       StreamStage.DB_COMMAND_CHECK,
@@ -45,9 +43,6 @@ const validateAndStream = async function* (prompt: string) {
       "Explaining...",
     );
     try {
-      console.log(
-        "[Validation] Blocked command detected, generating explanation...",
-      );
       const stream = generateConversationStream(prompt, {
         isRejection: true,
         reason: dbResult.error || "Blocked destructive SQL command detected.",
@@ -214,8 +209,6 @@ const validateAndStream = async function* (prompt: string) {
     { input: prompt },
   );
 
-  console.log("[Validation] Prompt Expansion Result:", expansionResult);
-
   if (!expansionResult.success) {
     yield streamManager.createEvent(
       StreamStage.PROMPT_EXPANSION,
@@ -245,8 +238,6 @@ const validateAndStream = async function* (prompt: string) {
     Tools.QUERY_GENERATION,
     { input: expansionData.expandedPrompt || prompt },
   );
-
-  console.log("[Validation] Query Generation Result:", queryGenResult);
 
   if (!queryGenResult.success) {
     yield streamManager.createEvent(
