@@ -34,7 +34,7 @@ const scrollbar = cn(
   "hover:[&::-webkit-scrollbar-thumb]:bg-black/25",
 );
 
-export function PromptInput({
+export const PromptInput = ({
   value,
   onChange,
   onSubmit,
@@ -43,7 +43,7 @@ export function PromptInput({
   disabled = false,
   className,
   maxLength,
-}: PromptInputProps) {
+}: PromptInputProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const canSubmit = !disabled && !isLoading && value.trim().length > 0;
@@ -100,7 +100,7 @@ export function PromptInput({
           "text-sm sm:text-base text-black leading-6 placeholder:text-black/20",
           "focus:outline-none",
           isLoading ? "overflow-hidden" : "overflow-y-auto",
-          scrollbar,
+          "custom-scroll",
           "transition-[height] duration-300 ease-out",
           (disabled || isLoading) && "cursor-not-allowed",
         )}
