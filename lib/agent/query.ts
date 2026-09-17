@@ -74,7 +74,6 @@ const generateQueryViaOpenRouter = async (
   apiKey: string,
 ): Promise<QueryGenerationResult | null> => {
   const model = process.env.OPENROUTER_MODEL || "anthropic/claude-3.5-sonnet";
-  console.log(`[QueryGeneration] Calling OpenRouter API with model: ${model}`);
 
   try {
     const response = await fetch(OPENROUTER_API_URL, {
